@@ -10,6 +10,11 @@ class PatientsController < ApplicationController
   # GET /patients/1
   # GET /patients/1.json
   def show
+    respond_to do |format|
+      format.html 
+      format.json { render json: (1..10).collect {|n| { date: ( Time.now - n.days).strftime("%FT%T"), close: rand  }} }
+    end
+    
   end
 
   # GET /patients/new
