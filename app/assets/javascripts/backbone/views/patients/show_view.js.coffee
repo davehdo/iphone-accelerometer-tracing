@@ -41,6 +41,7 @@ class Trendline.Views.Patients.ShowView extends Backbone.View
       .html "<h4>Blood pressure</h4><h1>96<h1>"
     @$el.find(".detail-container").append $div_detail
 
+    # retrieve and plot the data
     d3.json "/patients/#{ @model.get("id") }.json", (error, data) =>
       if (error)
         throw error
@@ -55,8 +56,24 @@ class Trendline.Views.Patients.ShowView extends Backbone.View
       svg_y_axis.append("g").attr("class", "y axis").call(yAxis)
       svg.append("path").datum(data).attr("class", "line").attr("d", line)
 
+    $(svg[0][0].parentElement).droppable
+      accept: ".label",
+      activeClass: "custom-state-active",
+      drop: ( event, ui ) =>
+        console.log ui.position
+        console.log ui.offset
+        annotation = new @model.annotations.model({ category: "Event", occurred_at: Date(Date.now())})
+        @model.annotations.add annotation
+        annotation.save {}, (m) -> console.log("Saved Annotation")
+
   render: ->
     @$el.html(@template(@model.toJSON() ))
     @addAll()
+
+    @$el.find("#draggable-markers-container .label").draggable
+      revert: "invalid" # when not dropped, the item will revert back to its initial position
+      containment: "document"
+      helper: "clone"
+      cursor: "move"
 
     return this
