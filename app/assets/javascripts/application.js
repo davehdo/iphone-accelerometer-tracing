@@ -15,4 +15,9 @@
 //= require bootstrap-sprockets
 //= require turbolinks
 //= require d3
+//= require underscore
+//= require backbone
+//= require backbone_rails_sync
+//= require backbone_datalink
+//= require backbone/trendline
 //= require_tree .
