@@ -1,31 +1,9 @@
-<p id="notice"><%= notice %></p>
+<div id="patients"></div>
 
-<h1>Listing Patients</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Uid</th>
-      <th>Active</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @patients.each do |patient| %>
-      <tr>
-        <td><%= patient.name %></td>
-        <td><%= patient.uid %></td>
-        <td><%= patient.active %></td>
-        <td><%= link_to 'Show', patient %></td>
-        <td><%= link_to 'Edit', edit_patient_path(patient) %></td>
-        <td><%= link_to 'Destroy', patient, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Patient', new_patient_path %>
+<script type="text/javascript">
+  $(function() {
+    // Blog is the app name
+    window.router = new Trendline.Routers.PatientsRouter({patients: <%= @patients.collect {|e| {id: e.to_param, name: e.name, uid: e.uid }}.to_json.html_safe -%>});
+    Backbone.history.start();
+  });
+</script>
