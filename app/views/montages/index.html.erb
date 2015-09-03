@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Montages</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @montages.each do |montage| %>
+      <tr>
+        <td><%= montage.name %></td>
+        <td><%= link_to 'Show', montage %></td>
+        <td><%= link_to 'Edit', edit_montage_path(montage) %></td>
+        <td><%= link_to 'Destroy', montage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Montage', new_montage_path %>
