@@ -3,7 +3,7 @@
 <script type="text/javascript">
   $(function() {
     // Blog is the app name
-    window.router = new Trendline.Routers.PatientsRouter({patients: <%= @patients.collect {|e| {id: e.to_param, name: e.name, uid: e.uid, annotations: e.annotations.collect {|a| {id: a.to_param, occurred_at: a.occurred_at}} }}.to_json.html_safe -%>});
+    window.router = new Trendline.Routers.PatientsRouter({patients: <%= @patients.collect {|e| {id: e.to_param, name: e.name, uid: e.uid, annotations: e.annotations.collect {|a| {id: a.to_param, occurred_at: a.occurred_at.iso8601}} }}.to_json.html_safe -%>});
     Backbone.history.start();
   });
 </script>

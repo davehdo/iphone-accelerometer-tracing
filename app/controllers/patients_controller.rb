@@ -10,9 +10,11 @@ class PatientsController < ApplicationController
   # GET /patients/1
   # GET /patients/1.json
   def show
+    # temporarily solution to provide random trendline data
+    
     respond_to do |format|
       format.html 
-      format.json { render json: (1..10).collect {|n| { date: ( Time.now - n.days).strftime("%FT%T"), close: rand  }} }
+      format.json { render json: (1..10).collect {|n| { date: ( Time.now - n.days).iso8601, close: rand  }} }
     end
     
   end

@@ -22,8 +22,8 @@ class AnnotationsController < ApplicationController
     @annotation = @patient.annotations.build( annotation_params )
     respond_to do |format|
       if @annotation.save
-        format.html { redirect_to @annotation, notice: 'Annotation was successfully created.' }
-        format.json { render :show, status: :created, location: @annotation }
+        format.html { redirect_to url_for([@patient, @annotation]), notice: 'Annotation was successfully created.' }
+        format.json { render :show, status: :created, location: url_for([@patient, @annotation]) }
       else
         format.html { render :new }
         format.json { render json: @annotation.errors, status: :unprocessable_entity }
