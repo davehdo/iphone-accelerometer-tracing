@@ -14,7 +14,7 @@ class Trendline.Views.Patients.ShowView extends Backbone.View
 
     # create the scales
     # i.e. x is a function that maps x to a pixel 
-    @x = d3.time.scale().range([0, @width]).domain([Date.now() - 60*60*24*5000, Date.now()])
+    @x = d3.time.scale().range([0, @width]).domain([Date.now() - 60*60*24*3000, Date.now()])
 
     # each chart has different domain so this will have to be set individually
     @y = d3.scale.linear().range([@height, 0])
@@ -76,21 +76,21 @@ class Trendline.Views.Patients.ShowView extends Backbone.View
       accept: ".label",
       activeClass: "custom-state-active",
       drop: ( event, ui ) =>
-        console.log ui.position.left
+        # console.log ui.position.left
         # console.log event.target
-        console.log event.offsetX
+        # console.log event.offsetX
         # console.log event.offsetY
-        console.log event.pageX
+        # console.log event.pageX
         # console.log event.pageY
-        console.log event.screenX
+        # console.log event.screenX
         # console.log event.screenY
         
         annotation = new @model.annotations.model
           category: "Event", 
-          occurred_at: @x.invert(event.offsetX ).toISOString()
+          occurred_at: @x.invert( event.offsetX ).toISOString()
         @model.annotations.add annotation
         console.log "Saving"
-        console.log annotation.get("occurred_at")
+        # console.log annotation.get("occurred_at")
         # annotation.save {}, 
           # success: (m) => 
             # console.log("Saved Annotation")
