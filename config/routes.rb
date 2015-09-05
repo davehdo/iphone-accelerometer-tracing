@@ -1,15 +1,21 @@
 Rails.application.routes.draw do
 
-  resources :patients do
-    resources :annotations
+  resources :accels do
+    collection do
+      post "save_many"
+    end
   end
   
-  resources :montages
+  # resources :patients do
+  #   resources :annotations
+  # end
+  
+  # resources :montages
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'patients#index'
+  root 'accels#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -1,0 +1,41 @@
+<%= form_for(@accel) do |f| %>
+  <% if @accel.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@accel.errors.count, "error") %> prohibited this accel from being saved:</h2>
+
+      <ul>
+      <% @accel.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :accelx %><br>
+    <%= f.text_field :accelx %>
+  </div>
+  <div class="field">
+    <%= f.label :accely %><br>
+    <%= f.text_field :accely %>
+  </div>
+  <div class="field">
+    <%= f.label :accelz %><br>
+    <%= f.text_field :accelz %>
+  </div>
+  <div class="field">
+    <%= f.label :rota %><br>
+    <%= f.text_field :rota %>
+  </div>
+  <div class="field">
+    <%= f.label :rotb %><br>
+    <%= f.text_field :rotb %>
+  </div>
+  <div class="field">
+    <%= f.label :rotg %><br>
+    <%= f.text_field :rotg %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

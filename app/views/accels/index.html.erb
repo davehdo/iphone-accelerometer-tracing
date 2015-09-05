@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Accels</h1>
+
+<div id="accels"></div>
+
+<script type="text/javascript">
+  $(function() {
+    // Blog is the app name
+    window.router = new Trendline.Routers.AccelsRouter({accels: <%= @accels.to_json.html_safe -%>});
+    Backbone.history.start();
+  });
+</script>
+
+<style>
+  
+  .axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+</style>
+
+<br>
+
+<%= link_to 'New Accel', new_accel_path %>

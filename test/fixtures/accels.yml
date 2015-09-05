@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  accelx: 1.5
+  accely: 1.5
+  accelz: 1.5
+  rota: 1.5
+  rotb: 1.5
+  rotg: 1.5
+
+two:
+  accelx: 1.5
+  accely: 1.5
+  accelz: 1.5
+  rota: 1.5
+  rotb: 1.5
+  rotg: 1.5
