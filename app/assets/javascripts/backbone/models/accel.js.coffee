@@ -15,17 +15,28 @@ class Trendline.Collections.AccelsCollection extends Backbone.Collection
   model: Trendline.Models.Accel
   url: '/accels'
   
+  comparator: 'timestamp'
+  
   saveMany: =>
-    toSave = []
+    jsonToSave = []
+    modelsToSave = []
     @map (i) -> 
       if i.isNew() 
-        toSave.push i.toJSON()
-    if toSave.length > 0
+        jsonToSave.push i.toJSON()
+        modelsToSave.push i
+        
+    if jsonToSave.length > 0
       $.ajax(
         type: "POST"
         url: "/accels/save_many"
-        data: {accel: toSave}
-        success: -> console.log "Saved many"
+        data: {accel: jsonToSave}
+        success: (models) => 
+          $.map modelsToSave, (model) =>
+            @remove model
+          $.map models, (model) =>
+            @add(model)
+          
+          console.log "Saved many"
         error: -> console.log "Error: Attempted to save many but failed"
         dataType: "json"
       )

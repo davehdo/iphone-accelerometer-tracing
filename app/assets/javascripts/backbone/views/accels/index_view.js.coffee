@@ -102,8 +102,7 @@ class Trendline.Views.Accels.IndexView extends Backbone.View
     @width = 960 - margin.left - margin.right
     @height = 200 - margin.top - margin.bottom
 
-    @x = d3.time.scale()
-    .range([0, @width]);
+    @x = d3.time.scale().range([0, @width])
 
     @y = d3.scale.linear()
     .range([@height, 0]);
@@ -137,8 +136,10 @@ class Trendline.Views.Accels.IndexView extends Backbone.View
         d.date = @parseDate(d.date)
         d.close = +d.close
 
-      @x.domain(d3.extent(data, (d) -> d.date ));
-      @y.domain(d3.extent(data, (d) -> d.close ));
+      #@x.domain(d3.extent(data, (d) -> d.date ));
+      # reset the x axis to show the last 30 seconds
+      @x.domain([Date.now() - 20000, Date.now() ])
+      @y.domain([-10, 10]);
     
       @svg.append("path")
         .datum(data)
@@ -149,6 +150,9 @@ class Trendline.Views.Accels.IndexView extends Backbone.View
     plotOne( false, @collection.slice(-nShown,-1).map (j,i) -> {date: j.get("timestamp"), close: j.get("accelx")})
     plotOne( false, @collection.slice(-nShown,-1).map (j,i) -> {date: j.get("timestamp"), close: j.get("accely")})
     plotOne( false, @collection.slice(-nShown,-1).map (j,i) -> {date: j.get("timestamp"), close: j.get("accelz")})
+    plotOne( false, @collection.slice(-nShown,-1).map (j,i) -> {date: j.get("timestamp"), close: j.get("rota")})
+    plotOne( false, @collection.slice(-nShown,-1).map (j,i) -> {date: j.get("timestamp"), close: j.get("rotb")})
+    plotOne( false, @collection.slice(-nShown,-1).map (j,i) -> {date: j.get("timestamp"), close: j.get("rotg")})
     
     #@svg.append("g")
       #.attr("class", "x axis")
@@ -177,9 +181,20 @@ class Trendline.Views.Accels.IndexView extends Backbone.View
     #@addAll()
     #setInterval @drawChart, 100
     @drawTrendlineScaffold()
-    setInterval @refreshTrendlines, 1000
     
-    # saves all the unsaved measurements
-    setInterval @collection.saveMany, 3000
+    # do a rapid refresh of the trendlines while recording to show ones own data
+    setInterval( =>
+      @refreshTrendlines() if @recording == true
+    , 500 ) 
     
+    # saves all the unsaved measurements periodically
+    setInterval @collection.saveMany, 2000
+    
+    # grabs data periodically for display unless recording
+    setInterval( =>
+      if @recording == false
+        @collection.fetch
+          success: @refreshTrendlines
+    , 1000 )
+
     return this
