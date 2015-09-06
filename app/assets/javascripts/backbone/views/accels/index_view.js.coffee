@@ -38,13 +38,17 @@ class Trendline.Views.Accels.IndexView extends Backbone.View
           timestamp: now.toISOString()
         )
         
+        x = e.accelerationIncludingGravity.x - @zero.accelx
+        y = e.accelerationIncludingGravity.x - @zero.accely
+        z = e.accelerationIncludingGravity.x - @zero.accelz
+        
+        #angle = Math.atan(x/ y)* 180.0 / 3.14 + Math.atan(x/ z)* 180.0 / 3.14
         #angle =  e.accelerationIncludingGravity.x ^ 2.0 + e.accelerationIncludingGravity.y ^ 2.0 + e.accelerationIncludingGravity.z ^ 2.0
-#
         #angle = 0 if angle < 10
         #angle = 180 if angle > 180
         #@$("#hammer").rotate( -40 - angle  )
 
-        
+
         if ( e.rotationRate )
           new_model.set "rota", e.rotationRate.alpha
           new_model.set "rotb", e.rotationRate.beta
@@ -62,12 +66,6 @@ class Trendline.Views.Accels.IndexView extends Backbone.View
       window.ondevicemotion = undefined 
     evt.stopPropagation() if evt
     false
-    
-    
-  
-        
-        
-
     
   render: =>
     @$el.html(@template(accels: @collection.toJSON() ))
@@ -94,7 +92,7 @@ class Trendline.Views.Accels.IndexView extends Backbone.View
     # the velocities
     @velocCharts = new trendlineScaffold
     @velocCharts.initialize( @$(".chart-container")[0] )
-    @velocCharts.x.domain([-1000, 1000])
+    @velocCharts.x.domain([-10000, 10000])
     # the direction vectors
     
     # do a rapid refresh of the trendlines while recording to show ones own data
@@ -109,6 +107,8 @@ class Trendline.Views.Accels.IndexView extends Backbone.View
         @velocCharts.refreshTrendlines( [
           @collection.velocityx( @zero.accelx )
         ]) 
+        
+
     , 500 ) 
     
     # saves all the unsaved measurements periodically
