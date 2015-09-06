@@ -4,7 +4,7 @@ class AccelsController < ApplicationController
   # GET /accels
   # GET /accels.json
   def index
-    @accels = Accel.desc(:timestamp).limit(400).reverse
+    @accels = Accel.where(:accelx.ne => nil).desc(:timestamp).limit(400).reverse
   end
 
   # GET /accels/1
@@ -78,6 +78,6 @@ class AccelsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def accel_params
-      params.require(:accel).permit(:accelx, :accely, :accelz, :rota, :rotb, :rotg, :timestamp)
+      params.require(:accel).permit(:accelx, :accely, :accelz, :rota, :rotb, :rotg, :timestamp, :lat, :lng, :accuracy, :heading, :speed)
     end
 end

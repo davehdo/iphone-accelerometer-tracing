@@ -7,8 +7,7 @@ Rails.application.routes.draw do
   end
   
   # resources :patients do
-  #   resources :annotations
-  # end
+  #   # end
   
   # resources :montages
   # The priority is based upon order of creation: first created -> highest priority.

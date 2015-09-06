@@ -2,12 +2,12 @@ class Trendline.Models.Accel extends Backbone.Model
   paramRoot: 'accel'
 
   defaults:
-    accelx: null
-    accely: null
-    accelz: null
-    rota: null
-    rotb: null
-    rotg: null
+    #accelx: null
+    #accely: null
+    #accelz: null
+    #rota: null
+    #rotb: null
+    #rotg: null
     timestamp: null # takes the format of a string in iso
     user_identifier: null
 
