@@ -17,6 +17,26 @@ class Trendline.Collections.AccelsCollection extends Backbone.Collection
   
   comparator: 'timestamp'
   
+    
+  
+  velocityx: (zero) =>
+    sum = 0
+    @map (j,i) => 
+      sum += (j.get("accelx") - zero ) if j.get("accelx")
+      {date: j.get("timestamp"), close: sum}
+
+  velocityy: (zero) =>
+    sum = 0
+    @map (j,i) => 
+      sum += (j.get("accely") - zero ) if j.get("accely")
+      {date: j.get("timestamp"), close: sum}
+
+  velocityz: (zero) =>
+    sum = 0
+    @map (j,i) => 
+      sum += (j.get("accelz") - zero ) if j.get("accelz")
+      {date: j.get("timestamp"), close: sum}
+
   saveMany: =>
     jsonToSave = []
     modelsToSave = []
